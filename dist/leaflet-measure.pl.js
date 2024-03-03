@@ -697,6 +697,9 @@
           (this.$measureTasks = (0, l.selectOne)('.js-measuretasks', t)),
           this._collapse(),
           this._updateMeasureNotStarted(),
+          L.Browser.android ||
+            (L.DomEvent.on(t, 'mouseenter', this._expand, this),
+            L.DomEvent.on(t, 'mouseleave', this._collapse, this)),
           L.DomEvent.on(r, 'click', L.DomEvent.stop),
           L.Browser.touch
             ? L.DomEvent.on(r, 'click', this._expand, this)
@@ -709,7 +712,7 @@
           L.DomEvent.on(i, 'click', this._handleMeasureDoubleClick, this);
       },
       _expand: function() {
-        f.hide(this.$toggle), f.show(this.$interaction), this._startMeasure();
+        f.hide(this.$toggle), f.show(this.$interaction);
       },
       _collapse: function() {
         this._locked || (f.hide(this.$interaction), f.show(this.$toggle));
@@ -741,7 +744,8 @@
           (this._captureMarker = L.marker(this._map.getCenter(), {
             clickable: !0,
             zIndexOffset: this.options.captureZIndex,
-            opacity: 0
+            opacity: 0,
+            autoPan: !1
           }).addTo(this._layer)),
           this._setCaptureMarkerIcon(),
           this._captureMarker

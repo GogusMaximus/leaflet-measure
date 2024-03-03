@@ -90,10 +90,10 @@ L.Control.Measure = L.Control.extend({
     this._collapse();
     this._updateMeasureNotStarted();
 
-    // if (!L.Browser.android) {
-    //   L.DomEvent.on(container, 'mouseenter', this._expand, this);
-    //   L.DomEvent.on(container, 'mouseleave', this._collapse, this);
-    // }
+    if (!L.Browser.android) {
+      L.DomEvent.on(container, 'mouseenter', this._expand, this);
+      L.DomEvent.on(container, 'mouseleave', this._collapse, this);
+    }
     L.DomEvent.on($toggle, 'click', L.DomEvent.stop);
     if (L.Browser.touch) {
       L.DomEvent.on($toggle, 'click', this._expand, this);
@@ -110,7 +110,6 @@ L.Control.Measure = L.Control.extend({
   _expand: function() {
     dom.hide(this.$toggle);
     dom.show(this.$interaction);
-    this._startMeasure();
   },
   _collapse: function() {
     if (!this._locked) {
@@ -148,7 +147,8 @@ L.Control.Measure = L.Control.extend({
     this._captureMarker = L.marker(this._map.getCenter(), {
       clickable: true,
       zIndexOffset: this.options.captureZIndex,
-      opacity: 0
+      opacity: 0,
+      autoPan: false
     }).addTo(this._layer);
     this._setCaptureMarkerIcon();
 

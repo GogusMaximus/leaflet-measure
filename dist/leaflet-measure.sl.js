@@ -107,7 +107,7 @@
     function l(e, t) {
       if (void 0 === e || null === e) throw new Error('radians is required');
       if (t && 'string' != typeof t) throw new Error('units must be a string');
-      var r = y[t || 'kilometers'];
+      var r = v[t || 'kilometers'];
       if (!r) throw new Error(t + ' units is invalid');
       return e * r;
     }
@@ -156,7 +156,7 @@
       r.d(t, 'd', function() {
         return h;
       });
-    var y = {
+    var v = {
       meters: 6371008.8,
       metres: 6371008.8,
       millimeters: 6371008800,
@@ -312,14 +312,14 @@
         h = r || n || l || p,
         d = h ? o(e.length, String) : [],
         m = d.length;
-      for (var y in e)
-        (!t && !f.call(e, y)) ||
+      for (var v in e)
+        (!t && !f.call(e, v)) ||
           (h &&
-            ('length' == y ||
-              (l && ('offset' == y || 'parent' == y)) ||
-              (p && ('buffer' == y || 'byteLength' == y || 'byteOffset' == y)) ||
-              u(y, m))) ||
-          d.push(y);
+            ('length' == v ||
+              (l && ('offset' == v || 'parent' == v)) ||
+              (p && ('buffer' == v || 'byteLength' == v || 'byteOffset' == v)) ||
+              u(v, m))) ||
+          d.push(v);
       return d;
     }
     var o = r(51),
@@ -426,13 +426,13 @@
             h = 0,
             d = e.type,
             m = 'FeatureCollection' === d,
-            y = 'Feature' === d,
-            v = m ? e.features.length : 1,
+            v = 'Feature' === d,
+            y = m ? e.features.length : 1,
             g = 0;
-          g < v;
+          g < y;
           g++
         ) {
-          (l = m ? e.features[g].geometry : y ? e.geometry : e),
+          (l = m ? e.features[g].geometry : v ? e.geometry : e),
             (f = !!l && 'GeometryCollection' === l.type),
             (u = f ? l.geometries.length : 1);
           for (var b = 0; b < u; b++) {
@@ -640,11 +640,11 @@
       h = n(p),
       d = r(87),
       m = r(88),
-      y = { imports: { numberFormat: d.numberFormat }, interpolate: /{{([\s\S]+?)}}/g },
-      v = (0, i.default)(m.controlTemplate, y),
-      g = (0, i.default)(m.pointPopupTemplate, y),
-      b = (0, i.default)(m.linePopupTemplate, y),
-      _ = (0, i.default)(m.areaPopupTemplate, y);
+      v = { imports: { numberFormat: d.numberFormat }, interpolate: /{{([\s\S]+?)}}/g },
+      y = (0, i.default)(m.controlTemplate, v),
+      g = (0, i.default)(m.pointPopupTemplate, v),
+      b = (0, i.default)(m.linePopupTemplate, v),
+      _ = (0, i.default)(m.areaPopupTemplate, v);
     (L.Control.Measure = L.Control.extend({
       _className: 'leaflet-control-measure',
       options: {
@@ -681,7 +681,7 @@
       _initLayout: function() {
         var e = this._className,
           t = (this._container = L.DomUtil.create('div', e + ' leaflet-bar'));
-        (t.innerHTML = v({ model: { className: e } })),
+        (t.innerHTML = y({ model: { className: e } })),
           t.setAttribute('aria-haspopup', !0),
           L.DomEvent.disableClickPropagation(t),
           L.DomEvent.disableScrollPropagation(t);
@@ -697,6 +697,9 @@
           (this.$measureTasks = (0, l.selectOne)('.js-measuretasks', t)),
           this._collapse(),
           this._updateMeasureNotStarted(),
+          L.Browser.android ||
+            (L.DomEvent.on(t, 'mouseenter', this._expand, this),
+            L.DomEvent.on(t, 'mouseleave', this._collapse, this)),
           L.DomEvent.on(r, 'click', L.DomEvent.stop),
           L.Browser.touch
             ? L.DomEvent.on(r, 'click', this._expand, this)
@@ -709,7 +712,7 @@
           L.DomEvent.on(i, 'click', this._handleMeasureDoubleClick, this);
       },
       _expand: function() {
-        f.hide(this.$toggle), f.show(this.$interaction), this._startMeasure();
+        f.hide(this.$toggle), f.show(this.$interaction);
       },
       _collapse: function() {
         this._locked || (f.hide(this.$interaction), f.show(this.$toggle));
@@ -741,7 +744,8 @@
           (this._captureMarker = L.marker(this._map.getCenter(), {
             clickable: !0,
             zIndexOffset: this.options.captureZIndex,
-            opacity: 0
+            opacity: 0,
+            autoPan: !1
           }).addTo(this._layer)),
           this._setCaptureMarkerIcon(),
           this._captureMarker
@@ -964,7 +968,7 @@
     function n(e, t, r) {
       var n = h.imports._.templateSettings || h;
       r && l(e, t, r) && (t = void 0), (e = d(e)), (t = o({}, t, n, s));
-      var M,
+      var w,
         O,
         L = o({}, t.imports, n.imports, s),
         k = f(L),
@@ -983,14 +987,14 @@
             '|$',
           'g'
         ),
-        D = w.call(t, 'sourceURL')
+        D = M.call(t, 'sourceURL')
           ? '//# sourceURL=' + (t.sourceURL + '').replace(/\s/g, ' ') + '\n'
           : '';
       e.replace(A, function(t, r, n, o, i, a) {
         return (
           n || (n = o),
           (C += e.slice(E, a).replace(x, u)),
-          r && ((M = !0), (C += "' +\n__e(" + r + ") +\n'")),
+          r && ((w = !0), (C += "' +\n__e(" + r + ") +\n'")),
           i && ((O = !0), (C += "';\n" + i + ";\n__p += '")),
           n && (C += "' +\n((__t = (" + n + ")) == null ? '' : __t) +\n'"),
           (E = a + t.length),
@@ -998,18 +1002,18 @@
         );
       }),
         (C += "';\n");
-      var T = w.call(t, 'variable') && t.variable;
+      var T = M.call(t, 'variable') && t.variable;
       if (T) {
         if (b.test(T)) throw new Error(m);
       } else C = 'with (obj) {\n' + C + '\n}\n';
-      (C = (O ? C.replace(y, '') : C).replace(v, '$1').replace(g, '$1;')),
+      (C = (O ? C.replace(v, '') : C).replace(y, '$1').replace(g, '$1;')),
         (C =
           'function(' +
           (T || 'obj') +
           ') {\n' +
           (T ? '' : 'obj || (obj = {});\n') +
           "var __t, __p = ''" +
-          (M ? ', __e = _.escape' : '') +
+          (w ? ', __e = _.escape' : '') +
           (O
             ? ", __j = Array.prototype.join;\nfunction print() { __p += __j.call(arguments, '') }\n"
             : ';\n') +
@@ -1033,15 +1037,15 @@
       h = r(71),
       d = r(26),
       m = 'Invalid `variable` option passed into `_.template`',
-      y = /\b__p \+= '';/g,
-      v = /\b(__p \+=) '' \+/g,
+      v = /\b__p \+= '';/g,
+      y = /\b(__p \+=) '' \+/g,
       g = /(__e\(.*?\)|\b__t\)) \+\n'';/g,
       b = /[()=,{}\[\]\/\s]/,
       _ = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g,
       j = /($^)/,
       x = /['\n\r\u2028\u2029\\]/g,
-      M = Object.prototype,
-      w = M.hasOwnProperty;
+      w = Object.prototype,
+      M = w.hasOwnProperty;
     e.exports = n;
   },
   function(e, t, r) {

@@ -697,6 +697,9 @@
           (this.$measureTasks = (0, l.selectOne)('.js-measuretasks', t)),
           this._collapse(),
           this._updateMeasureNotStarted(),
+          L.Browser.android ||
+            (L.DomEvent.on(t, 'mouseenter', this._expand, this),
+            L.DomEvent.on(t, 'mouseleave', this._collapse, this)),
           L.DomEvent.on(r, 'click', L.DomEvent.stop),
           L.Browser.touch
             ? L.DomEvent.on(r, 'click', this._expand, this)
@@ -709,7 +712,7 @@
           L.DomEvent.on(i, 'click', this._handleMeasureDoubleClick, this);
       },
       _expand: function() {
-        f.hide(this.$toggle), f.show(this.$interaction), this._startMeasure();
+        f.hide(this.$toggle), f.show(this.$interaction);
       },
       _collapse: function() {
         this._locked || (f.hide(this.$interaction), f.show(this.$toggle));
@@ -741,7 +744,8 @@
           (this._captureMarker = L.marker(this._map.getCenter(), {
             clickable: !0,
             zIndexOffset: this.options.captureZIndex,
-            opacity: 0
+            opacity: 0,
+            autoPan: !1
           }).addTo(this._layer)),
           this._setCaptureMarkerIcon(),
           this._captureMarker
@@ -964,7 +968,7 @@
     function n(e, t, r) {
       var n = h.imports._.templateSettings || h;
       r && l(e, t, r) && (t = void 0), (e = d(e)), (t = o({}, t, n, a));
-      var M,
+      var w,
         O,
         L = o({}, t.imports, n.imports, a),
         k = f(L),
@@ -983,14 +987,14 @@
             '|$',
           'g'
         ),
-        D = w.call(t, 'sourceURL')
+        D = M.call(t, 'sourceURL')
           ? '//# sourceURL=' + (t.sourceURL + '').replace(/\s/g, ' ') + '\n'
           : '';
       e.replace(C, function(t, r, n, o, i, s) {
         return (
           n || (n = o),
           (A += e.slice(E, s).replace(x, u)),
-          r && ((M = !0), (A += "' +\n__e(" + r + ") +\n'")),
+          r && ((w = !0), (A += "' +\n__e(" + r + ") +\n'")),
           i && ((O = !0), (A += "';\n" + i + ";\n__p += '")),
           n && (A += "' +\n((__t = (" + n + ")) == null ? '' : __t) +\n'"),
           (E = s + t.length),
@@ -998,7 +1002,7 @@
         );
       }),
         (A += "';\n");
-      var T = w.call(t, 'variable') && t.variable;
+      var T = M.call(t, 'variable') && t.variable;
       if (T) {
         if (b.test(T)) throw new Error(m);
       } else A = 'with (obj) {\n' + A + '\n}\n';
@@ -1009,7 +1013,7 @@
           ') {\n' +
           (T ? '' : 'obj || (obj = {});\n') +
           "var __t, __p = ''" +
-          (M ? ', __e = _.escape' : '') +
+          (w ? ', __e = _.escape' : '') +
           (O
             ? ", __j = Array.prototype.join;\nfunction print() { __p += __j.call(arguments, '') }\n"
             : ';\n') +
@@ -1040,8 +1044,8 @@
       _ = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g,
       j = /($^)/,
       x = /['\n\r\u2028\u2029\\]/g,
-      M = Object.prototype,
-      w = M.hasOwnProperty;
+      w = Object.prototype,
+      M = w.hasOwnProperty;
     e.exports = n;
   },
   function(e, t, r) {
