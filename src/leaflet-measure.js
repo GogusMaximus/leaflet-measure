@@ -40,7 +40,7 @@ L.Control.Measure = L.Control.extend({
     popupOptions: {
       // standard leaflet popup options http://leafletjs.com/reference-1.3.0.html#popup-option
       className: 'leaflet-measure-resultpopup',
-      autoPanPadding: [10, 10]
+      autoPan: false
     }
   },
   initialize: function(options) {

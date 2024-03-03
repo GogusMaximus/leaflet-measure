@@ -655,7 +655,7 @@
         activeColor: '#c5e5f8',
         completedColor: '#c5e5f8',
         captureZIndex: 1e4,
-        popupOptions: { className: 'leaflet-measure-resultpopup', autoPanPadding: [10, 10] }
+        popupOptions: { className: 'leaflet-measure-resultpopup', autoPan: !1 }
       },
       initialize: function(e) {
         L.setOptions(this, e);
