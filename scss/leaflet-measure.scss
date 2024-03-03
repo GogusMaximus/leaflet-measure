@@ -1,7 +1,7 @@
 // leaflet-measure.scss
 
 $color-divider: #ddd;
-$color-button: #5e66cc;
+$color-button: #000000;
 $color-lightertext: #999;
 
 $spacing-external: 12px;
@@ -25,7 +25,7 @@ $button-icon-spacing: 4px;
   display: inline;
   width: auto;
   height: auto;
-  padding-left: 20px;
+  padding-left: 16px;
   margin-right: $button-icon-spacing;
   line-height: 1em;
   border: 0;
@@ -48,8 +48,46 @@ $button-icon-spacing: 4px;
   @include hoverbutton;
 }
 
+link {
+  color: $color-button;
+}
+
+@mixin delete-button ($icon) {
+  display: inline;
+  width: auto;
+  height: auto;
+  padding-left: 12px;
+  margin-right: $button-icon-spacing;
+  line-height: 1em;
+  border: 0;
+  text-align: left;
+  color: $color-button;
+  &,
+  &:hover {
+    background-color: transparent;
+  }
+  background: {
+    image: url('assets/trash_@2x.png');
+    repeat: no-repeat;
+    position: 0% 50%;
+    size: $button-icon-size $button-icon-size;
+  }
+  .leaflet-retina & {
+    background-image: url('assets/trash_@2x.png');
+  }
+
+  @include hoverbutton;
+}
+
 .leaflet-control-measure,
 .leaflet-measure-resultpopup {
+  .content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    column-gap: 12px;
+  }
+
   h3 {
     margin: 0 0 $spacing-external 0;
     padding-bottom: $spacing-internal;
@@ -63,10 +101,13 @@ $button-icon-spacing: 4px;
     }
   }
   .tasks {
-    margin: $spacing-external 0 0 0;
-    padding: $spacing-internal 0 0 0;
-    border-top: solid 1px $color-divider;
-    text-align: right;
+    //margin: $spacing-external 0 0 0;
+    //padding: $spacing-internal 0 0 0;
+    //border-top: solid 1px $color-divider;
+    margin: 0;
+    padding: 0;
+
+    text-align: left;
 
     list-style: none;
     list-style-image: none;
@@ -134,9 +175,9 @@ $button-icon-spacing: 4px;
 
   .results {
     .group {
-      margin-top: $spacing-internal;
-      padding-top: $spacing-internal;
-      border-top: dotted 1px lighten($color-divider, 5);
+      //margin-top: $spacing-internal;
+      //padding-top: $spacing-internal;
+      //border-top: dotted 1px lighten($color-divider, 5);
       &:first-child {
         margin-top: 0;
         padding-top: 0;
@@ -165,6 +206,6 @@ $button-icon-spacing: 4px;
     @include button(focus);
   }
   a.deletemarkup {
-    @include button(trash);
+    @include delete-button(trash);
   }
 }

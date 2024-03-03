@@ -33,10 +33,10 @@ L.Control.Measure = L.Control.extend({
     units: {},
     position: 'topright',
     primaryLengthUnit: 'feet',
-    secondaryLengthUnit: 'miles',
-    primaryAreaUnit: 'acres',
-    activeColor: '#ABE67E', // base color for map features while actively measuring
-    completedColor: '#C8F2BE', // base color for permenant features generated from completed measure
+    // secondaryLengthUnit: 'miles',
+    primaryAreaUnit: 'sqfeet',
+    activeColor: '#c5e5f8', // base color for map features while actively measuring
+    completedColor: '#c5e5f8', // base color for permenant features generated from completed measure
     captureZIndex: 10000, // z-index of the marker used to capture measure events
     popupOptions: {
       // standard leaflet popup options http://leafletjs.com/reference-1.3.0.html#popup-option
@@ -91,10 +91,10 @@ L.Control.Measure = L.Control.extend({
     this._collapse();
     this._updateMeasureNotStarted();
 
-    if (!L.Browser.android) {
-      L.DomEvent.on(container, 'mouseenter', this._expand, this);
-      L.DomEvent.on(container, 'mouseleave', this._collapse, this);
-    }
+    // if (!L.Browser.android) {
+    //   L.DomEvent.on(container, 'mouseenter', this._expand, this);
+    //   L.DomEvent.on(container, 'mouseleave', this._collapse, this);
+    // }
     L.DomEvent.on($toggle, 'click', L.DomEvent.stop);
     if (L.Browser.touch) {
       L.DomEvent.on($toggle, 'click', this._expand, this);
@@ -111,6 +111,7 @@ L.Control.Measure = L.Control.extend({
   _expand: function() {
     dom.hide(this.$toggle);
     dom.show(this.$interaction);
+    this._startMeasure();
   },
   _collapse: function() {
     if (!this._locked) {
