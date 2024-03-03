@@ -642,10 +642,9 @@
       m = r(88),
       y = { imports: { numberFormat: d.numberFormat }, interpolate: /{{([\s\S]+?)}}/g },
       v = (0, i.default)(m.controlTemplate, y),
-      g = (0, i.default)(m.resultsTemplate, y),
-      b = (0, i.default)(m.pointPopupTemplate, y),
-      _ = (0, i.default)(m.linePopupTemplate, y),
-      j = (0, i.default)(m.areaPopupTemplate, y);
+      g = (0, i.default)(m.pointPopupTemplate, y),
+      b = (0, i.default)(m.linePopupTemplate, y),
+      _ = (0, i.default)(m.areaPopupTemplate, y);
     (L.Control.Measure = L.Control.extend({
       _className: 'leaflet-control-measure',
       options: {
@@ -842,13 +841,7 @@
           )
         };
       },
-      _updateResults: function() {
-        var e = (0, c.default)(this._latlngs),
-          t = (this._resultsModel = L.extend({}, e, this._getMeasurementDisplayStrings(e), {
-            pointCount: this._latlngs.length
-          }));
-        this.$results.innerHTML = g({ model: t });
-      },
+      _updateResults: function() {},
       _handleMeasureMove: function(e) {
         this._measureDrag
           ? this._measureDrag.setLatLng(e.latlng)
@@ -867,12 +860,12 @@
           var n = (0, c.default)(e);
           1 === e.length
             ? ((t = L.circleMarker(e[0], this._symbols.getSymbol('resultPoint'))),
-              (r = b({ model: n })))
+              (r = g({ model: n })))
             : 2 === e.length
               ? ((t = L.polyline(e, this._symbols.getSymbol('resultLine'))),
-                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
+                (r = b({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
               : ((t = L.polygon(e, this._symbols.getSymbol('resultArea'))),
-                (r = j({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
+                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
           var o = L.DomUtil.create('div', '');
           o.innerHTML = r;
           var i = (0, l.selectOne)('.js-zoomto', o);

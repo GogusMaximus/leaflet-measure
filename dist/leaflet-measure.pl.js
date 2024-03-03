@@ -642,10 +642,9 @@
       m = r(88),
       y = { imports: { numberFormat: d.numberFormat }, interpolate: /{{([\s\S]+?)}}/g },
       v = (0, i.default)(m.controlTemplate, y),
-      g = (0, i.default)(m.resultsTemplate, y),
-      b = (0, i.default)(m.pointPopupTemplate, y),
-      _ = (0, i.default)(m.linePopupTemplate, y),
-      w = (0, i.default)(m.areaPopupTemplate, y);
+      g = (0, i.default)(m.pointPopupTemplate, y),
+      b = (0, i.default)(m.linePopupTemplate, y),
+      _ = (0, i.default)(m.areaPopupTemplate, y);
     (L.Control.Measure = L.Control.extend({
       _className: 'leaflet-control-measure',
       options: {
@@ -842,13 +841,7 @@
           )
         };
       },
-      _updateResults: function() {
-        var e = (0, c.default)(this._latlngs),
-          t = (this._resultsModel = L.extend({}, e, this._getMeasurementDisplayStrings(e), {
-            pointCount: this._latlngs.length
-          }));
-        this.$results.innerHTML = g({ model: t });
-      },
+      _updateResults: function() {},
       _handleMeasureMove: function(e) {
         this._measureDrag
           ? this._measureDrag.setLatLng(e.latlng)
@@ -867,12 +860,12 @@
           var n = (0, c.default)(e);
           1 === e.length
             ? ((t = L.circleMarker(e[0], this._symbols.getSymbol('resultPoint'))),
-              (r = b({ model: n })))
+              (r = g({ model: n })))
             : 2 === e.length
               ? ((t = L.polyline(e, this._symbols.getSymbol('resultLine'))),
-                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
+                (r = b({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
               : ((t = L.polygon(e, this._symbols.getSymbol('resultArea'))),
-                (r = w({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
+                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
           var o = L.DomUtil.create('div', '');
           o.innerHTML = r;
           var i = (0, l.selectOne)('.js-zoomto', o);
@@ -978,8 +971,8 @@
         P = s(L, k),
         E = 0,
         S = t.interpolate || w,
-        C = "__p += '",
-        A = RegExp(
+        A = "__p += '",
+        C = RegExp(
           (t.escape || w).source +
             '|' +
             S.source +
@@ -993,24 +986,24 @@
         D = M.call(t, 'sourceURL')
           ? '//# sourceURL=' + (t.sourceURL + '').replace(/\s/g, ' ') + '\n'
           : '';
-      e.replace(A, function(t, r, n, o, i, s) {
+      e.replace(C, function(t, r, n, o, i, s) {
         return (
           n || (n = o),
-          (C += e.slice(E, s).replace(j, u)),
-          r && ((x = !0), (C += "' +\n__e(" + r + ") +\n'")),
-          i && ((O = !0), (C += "';\n" + i + ";\n__p += '")),
-          n && (C += "' +\n((__t = (" + n + ")) == null ? '' : __t) +\n'"),
+          (A += e.slice(E, s).replace(j, u)),
+          r && ((x = !0), (A += "' +\n__e(" + r + ") +\n'")),
+          i && ((O = !0), (A += "';\n" + i + ";\n__p += '")),
+          n && (A += "' +\n((__t = (" + n + ")) == null ? '' : __t) +\n'"),
           (E = s + t.length),
           t
         );
       }),
-        (C += "';\n");
+        (A += "';\n");
       var T = M.call(t, 'variable') && t.variable;
       if (T) {
         if (b.test(T)) throw new Error(m);
-      } else C = 'with (obj) {\n' + C + '\n}\n';
-      (C = (O ? C.replace(y, '') : C).replace(v, '$1').replace(g, '$1;')),
-        (C =
+      } else A = 'with (obj) {\n' + A + '\n}\n';
+      (A = (O ? A.replace(y, '') : A).replace(v, '$1').replace(g, '$1;')),
+        (A =
           'function(' +
           (T || 'obj') +
           ') {\n' +
@@ -1020,12 +1013,12 @@
           (O
             ? ", __j = Array.prototype.join;\nfunction print() { __p += __j.call(arguments, '') }\n"
             : ';\n') +
-          C +
+          A +
           'return __p\n}');
       var $ = i(function() {
-        return Function(k, D + 'return ' + C).apply(void 0, P);
+        return Function(k, D + 'return ' + A).apply(void 0, P);
       });
-      if ((($.source = C), c($))) throw $;
+      if ((($.source = A), c($))) throw $;
       return $;
     }
     var o = r(32),

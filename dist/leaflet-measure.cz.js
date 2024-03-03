@@ -642,10 +642,9 @@
       m = r(88),
       y = { imports: { numberFormat: d.numberFormat }, interpolate: /{{([\s\S]+?)}}/g },
       v = (0, i.default)(m.controlTemplate, y),
-      g = (0, i.default)(m.resultsTemplate, y),
-      b = (0, i.default)(m.pointPopupTemplate, y),
-      _ = (0, i.default)(m.linePopupTemplate, y),
-      j = (0, i.default)(m.areaPopupTemplate, y);
+      g = (0, i.default)(m.pointPopupTemplate, y),
+      b = (0, i.default)(m.linePopupTemplate, y),
+      _ = (0, i.default)(m.areaPopupTemplate, y);
     (L.Control.Measure = L.Control.extend({
       _className: 'leaflet-control-measure',
       options: {
@@ -842,13 +841,7 @@
           )
         };
       },
-      _updateResults: function() {
-        var e = (0, c.default)(this._latlngs),
-          t = (this._resultsModel = L.extend({}, e, this._getMeasurementDisplayStrings(e), {
-            pointCount: this._latlngs.length
-          }));
-        this.$results.innerHTML = g({ model: t });
-      },
+      _updateResults: function() {},
       _handleMeasureMove: function(e) {
         this._measureDrag
           ? this._measureDrag.setLatLng(e.latlng)
@@ -867,12 +860,12 @@
           var n = (0, c.default)(e);
           1 === e.length
             ? ((t = L.circleMarker(e[0], this._symbols.getSymbol('resultPoint'))),
-              (r = b({ model: n })))
+              (r = g({ model: n })))
             : 2 === e.length
               ? ((t = L.polyline(e, this._symbols.getSymbol('resultLine'))),
-                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
+                (r = b({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
               : ((t = L.polygon(e, this._symbols.getSymbol('resultArea'))),
-                (r = j({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
+                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
           var o = L.DomUtil.create('div', '');
           o.innerHTML = r;
           var i = (0, l.selectOne)('.js-zoomto', o);
@@ -971,7 +964,7 @@
     function n(e, t, r) {
       var n = h.imports._.templateSettings || h;
       r && l(e, t, r) && (t = void 0), (e = d(e)), (t = o({}, t, n, a));
-      var M,
+      var w,
         O,
         L = o({}, t.imports, n.imports, a),
         k = f(L),
@@ -990,14 +983,14 @@
             '|$',
           'g'
         ),
-        D = w.call(t, 'sourceURL')
+        D = M.call(t, 'sourceURL')
           ? '//# sourceURL=' + (t.sourceURL + '').replace(/\s/g, ' ') + '\n'
           : '';
       e.replace(A, function(t, r, n, o, i, s) {
         return (
           n || (n = o),
           (C += e.slice(E, s).replace(x, u)),
-          r && ((M = !0), (C += "' +\n__e(" + r + ") +\n'")),
+          r && ((w = !0), (C += "' +\n__e(" + r + ") +\n'")),
           i && ((O = !0), (C += "';\n" + i + ";\n__p += '")),
           n && (C += "' +\n((__t = (" + n + ")) == null ? '' : __t) +\n'"),
           (E = s + t.length),
@@ -1005,7 +998,7 @@
         );
       }),
         (C += "';\n");
-      var T = w.call(t, 'variable') && t.variable;
+      var T = M.call(t, 'variable') && t.variable;
       if (T) {
         if (b.test(T)) throw new Error(m);
       } else C = 'with (obj) {\n' + C + '\n}\n';
@@ -1016,7 +1009,7 @@
           ') {\n' +
           (T ? '' : 'obj || (obj = {});\n') +
           "var __t, __p = ''" +
-          (M ? ', __e = _.escape' : '') +
+          (w ? ', __e = _.escape' : '') +
           (O
             ? ", __j = Array.prototype.join;\nfunction print() { __p += __j.call(arguments, '') }\n"
             : ';\n') +
@@ -1047,8 +1040,8 @@
       _ = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g,
       j = /($^)/,
       x = /['\n\r\u2028\u2029\\]/g,
-      M = Object.prototype,
-      w = M.hasOwnProperty;
+      w = Object.prototype,
+      M = w.hasOwnProperty;
     e.exports = n;
   },
   function(e, t, r) {

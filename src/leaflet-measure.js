@@ -11,7 +11,6 @@ import { numberFormat } from './utils';
 
 import {
   controlTemplate,
-  resultsTemplate,
   pointPopupTemplate,
   linePopupTemplate,
   areaPopupTemplate
@@ -22,7 +21,7 @@ const templateSettings = {
   interpolate: /{{([\s\S]+?)}}/g // mustache
 };
 const controlTemplateCompiled = template(controlTemplate, templateSettings);
-const resultsTemplateCompiled = template(resultsTemplate, templateSettings);
+// const resultsTemplateCompiled = template(resultsTemplate, templateSettings);
 const pointPopupTemplateCompiled = template(pointPopupTemplate, templateSettings);
 const linePopupTemplateCompiled = template(linePopupTemplate, templateSettings);
 const areaPopupTemplateCompiled = template(areaPopupTemplate, templateSettings);
@@ -294,16 +293,16 @@ L.Control.Measure = L.Control.extend({
   },
   // update results area of dom with calced measure from `this._latlngs`
   _updateResults: function() {
-    const calced = calc(this._latlngs);
-    const model = (this._resultsModel = L.extend(
-      {},
-      calced,
-      this._getMeasurementDisplayStrings(calced),
-      {
-        pointCount: this._latlngs.length
-      }
-    ));
-    this.$results.innerHTML = resultsTemplateCompiled({ model });
+    // const calced = calc(this._latlngs);
+    // const model = (this._resultsModel = L.extend(
+    //   {},
+    //   calced,
+    //   this._getMeasurementDisplayStrings(calced),
+    //   {
+    //     pointCount: this._latlngs.length
+    //   }
+    // ));
+    // this.$results.innerHTML = resultsTemplateCompiled({ model });
   },
   // mouse move handler while measure in progress
   // adds floating measure marker under cursor

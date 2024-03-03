@@ -440,8 +440,8 @@
               j = 0;
             if (null !== (a = f ? l.geometries[b] : l)) {
               c = a.coordinates;
-              var M = a.type;
-              switch (((p = !r || ('Polygon' !== M && 'MultiPolygon' !== M) ? 0 : 1), M)) {
+              var x = a.type;
+              switch (((p = !r || ('Polygon' !== x && 'MultiPolygon' !== x) ? 0 : 1), x)) {
                 case null:
                   break;
                 case 'Point':
@@ -452,9 +452,9 @@
                 case 'MultiPoint':
                   for (o = 0; o < c.length; o++) {
                     if (!1 === t(c[o], h, g, _, j)) return !1;
-                    h++, 'MultiPoint' === M && _++;
+                    h++, 'MultiPoint' === x && _++;
                   }
-                  'LineString' === M && _++;
+                  'LineString' === x && _++;
                   break;
                 case 'Polygon':
                 case 'MultiLineString':
@@ -463,13 +463,13 @@
                       if (!1 === t(c[o][i], h, g, _, j)) return !1;
                       h++;
                     }
-                    'MultiLineString' === M && _++, 'Polygon' === M && j++;
+                    'MultiLineString' === x && _++, 'Polygon' === x && j++;
                   }
-                  'Polygon' === M && _++;
+                  'Polygon' === x && _++;
                   break;
                 case 'MultiPolygon':
                   for (o = 0; o < c.length; o++) {
-                    for ('MultiPolygon' === M && (j = 0), i = 0; i < c[o].length; i++) {
+                    for ('MultiPolygon' === x && (j = 0), i = 0; i < c[o].length; i++) {
                       for (s = 0; s < c[o][i].length - p; s++) {
                         if (!1 === t(c[o][i][s], h, g, _, j)) return !1;
                         h++;
@@ -642,10 +642,9 @@
       m = r(88),
       y = { imports: { numberFormat: d.numberFormat }, interpolate: /{{([\s\S]+?)}}/g },
       v = (0, i.default)(m.controlTemplate, y),
-      g = (0, i.default)(m.resultsTemplate, y),
-      b = (0, i.default)(m.pointPopupTemplate, y),
-      _ = (0, i.default)(m.linePopupTemplate, y),
-      j = (0, i.default)(m.areaPopupTemplate, y);
+      g = (0, i.default)(m.pointPopupTemplate, y),
+      b = (0, i.default)(m.linePopupTemplate, y),
+      _ = (0, i.default)(m.areaPopupTemplate, y);
     (L.Control.Measure = L.Control.extend({
       _className: 'leaflet-control-measure',
       options: {
@@ -842,13 +841,7 @@
           )
         };
       },
-      _updateResults: function() {
-        var e = (0, c.default)(this._latlngs),
-          t = (this._resultsModel = L.extend({}, e, this._getMeasurementDisplayStrings(e), {
-            pointCount: this._latlngs.length
-          }));
-        this.$results.innerHTML = g({ model: t });
-      },
+      _updateResults: function() {},
       _handleMeasureMove: function(e) {
         this._measureDrag
           ? this._measureDrag.setLatLng(e.latlng)
@@ -867,12 +860,12 @@
           var n = (0, c.default)(e);
           1 === e.length
             ? ((t = L.circleMarker(e[0], this._symbols.getSymbol('resultPoint'))),
-              (r = b({ model: n })))
+              (r = g({ model: n })))
             : 2 === e.length
               ? ((t = L.polyline(e, this._symbols.getSymbol('resultLine'))),
-                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
+                (r = b({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })))
               : ((t = L.polygon(e, this._symbols.getSymbol('resultArea'))),
-                (r = j({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
+                (r = _({ model: L.extend({}, n, this._getMeasurementDisplayStrings(n)) })));
           var o = L.DomUtil.create('div', '');
           o.innerHTML = r;
           var i = (0, l.selectOne)('.js-zoomto', o);
@@ -971,7 +964,7 @@
     function n(e, t, r) {
       var n = h.imports._.templateSettings || h;
       r && l(e, t, r) && (t = void 0), (e = d(e)), (t = o({}, t, n, a));
-      var x,
+      var M,
         O,
         L = o({}, t.imports, n.imports, a),
         P = f(L),
@@ -996,8 +989,8 @@
       e.replace(A, function(t, r, n, o, i, s) {
         return (
           n || (n = o),
-          (S += e.slice(E, s).replace(M, u)),
-          r && ((x = !0), (S += "' +\n__e(" + r + ") +\n'")),
+          (S += e.slice(E, s).replace(x, u)),
+          r && ((M = !0), (S += "' +\n__e(" + r + ") +\n'")),
           i && ((O = !0), (S += "';\n" + i + ";\n__p += '")),
           n && (S += "' +\n((__t = (" + n + ")) == null ? '' : __t) +\n'"),
           (E = s + t.length),
@@ -1016,7 +1009,7 @@
           ') {\n' +
           (T ? '' : 'obj || (obj = {});\n') +
           "var __t, __p = ''" +
-          (x ? ', __e = _.escape' : '') +
+          (M ? ', __e = _.escape' : '') +
           (O
             ? ", __j = Array.prototype.join;\nfunction print() { __p += __j.call(arguments, '') }\n"
             : ';\n') +
@@ -1046,9 +1039,9 @@
       b = /[()=,{}\[\]\/\s]/,
       _ = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g,
       j = /($^)/,
-      M = /['\n\r\u2028\u2029\\]/g,
-      x = Object.prototype,
-      w = x.hasOwnProperty;
+      x = /['\n\r\u2028\u2029\\]/g,
+      M = Object.prototype,
+      w = M.hasOwnProperty;
     e.exports = n;
   },
   function(e, t, r) {
